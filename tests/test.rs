@@ -18,11 +18,18 @@ fn main() {
         Test {
             name: "long_computation".into(),
             kind: "".into(),
-            is_ignored: true,
+            is_ignored: false,
+            // is_ignored: true,
             is_bench: false,
             data: (),
         },
     ];
 
-    run_tests(&args, tests, |test| Outcome::Passed).exit();
+    run_tests(&args, tests, |test| {
+        if test.name != "long_computation" {
+            Outcome::Passed
+        } else {
+            Outcome::Failed { msg: None }
+        }
+    }).exit();
 }
